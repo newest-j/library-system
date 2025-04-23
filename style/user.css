@@ -37,10 +37,19 @@ body{
 }
 
 
-@media screen and (max-width:472px){
+@media screen and (max-width:470px){
     #nav{
         flex-direction: column;
         gap:10px;
+    }
+
+    
+   
+
+}
+@media screen and (min-width:576px) {
+    #offcanvassidebar{
+        display: none;
     }
 }
 

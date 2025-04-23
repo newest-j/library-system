@@ -42,6 +42,12 @@ body{
     }
 }
 
+@media screen and (min-width:576px) {
+    #offcanvassidebar{
+        display: none;
+    }
+}
+
 
 
   

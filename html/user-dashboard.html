@@ -15,44 +15,21 @@
 
 <body>
 
-    <div class="container text-white d-flex pt-4 justify-content-between" id="nav">
-
-
-        <div>
-            <p>Dashboard</p>
-        </div>
-
-
-
-
-        <div>
-            <input id="input" type="text" class="form-control" placeholder="Search...">
-        </div>
-
-        <div class="d-flex gap-4">
-            <div>
-                <p class="mb-0">name</p>
-                <p>status</p>
-            </div>
-
-            <div>
-                <img src="/images/icons8-female-profile-48.png" alt="">
-            </div>
-        </div>
-    </div>
-
-
-    <!-- --hero-- -->
+   <!-- the page header and sidebar goes here -->
+    
+   <div id="header"></div>
 
     <div class="d-flex gap-5">
         <!-- sidebar -->
-        <div class="d-flex  flex-column gap-5 ps-3 pt-4">
+
+
+        <div id="sidebar" class="d-sm-flex d-none flex-column gap-5 ps-3 pt-4">
 
 
             <a href="/html/user-dashboard.html"> <i class="fa fa-home" aria-hidden="true"></i></a>
             <a href="/html/userbook.html"><i class="fa fa-book" aria-hidden="true"></i></a>
             <a href=""> <i class="fa-solid fa-money-bill"></i></a>
-            <a href=""> <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            <a type="button" class="text-primary"> <i class="fa fa-sign-out" aria-hidden="true"></i></a>
 
 
         </div>
@@ -132,7 +109,7 @@
                 </div>
 
 
-               
+
             </div>
 
 
@@ -147,12 +124,12 @@
                                 <a class="btn btn-primary" href="" type="button">Add New Book</a>
                             </div>
 
-                            <div class="table-responsive">
-                                <table class="table table-hover table-dark  mt-3 rounded-2">
+                            <div class="table-responsive" style="max-height: 300px;">
+                                <table id="booktable" class="table table-hover table-dark  mt-3 rounded-2">
                                     <thead>
                                         <tr>
                                             <th>
-                                                Book Id
+                                                Book cover
                                             </th>
                                             <th>
                                                 Title
@@ -162,7 +139,7 @@
                                             </th>
 
                                             <th>
-                                                Available
+                                                First-Year-Published
                                             </th>
 
                                         </tr>
@@ -171,7 +148,10 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                34333
+                                                <img class="img-fluid"
+                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
+                                                    alt="Book cover" />
+                                            </td>
                                             </td>
                                             <td>
                                                 The Secret Syllabus
@@ -180,14 +160,16 @@
                                                 Lucy Ives
                                             </td>
                                             <td>
-                                                99
+                                                year
                                             </td>
                                         </tr>
 
 
                                         <tr>
                                             <td>
-                                                34333
+                                                <img class="img-fluid"
+                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
+                                                    alt="Book cover" />
                                             </td>
                                             <td>
                                                 The Secret Syllabus
@@ -196,14 +178,16 @@
                                                 Lucy Ives
                                             </td>
                                             <td>
-                                                99
+                                                year
                                             </td>
                                         </tr>
 
 
                                         <tr>
                                             <td>
-                                                34333
+                                                <img class="img-fluid"
+                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
+                                                    alt="Book cover" />
                                             </td>
                                             <td>
                                                 The Secret Syllabus
@@ -212,14 +196,16 @@
                                                 Lucy Ives
                                             </td>
                                             <td>
-                                                99
+                                                year
                                             </td>
                                         </tr>
 
 
                                         <tr>
                                             <td>
-                                                34333
+                                                <img class="img-fluid"
+                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
+                                                    alt="Book cover" />
                                             </td>
                                             <td>
                                                 The Secret Syllabus
@@ -228,7 +214,7 @@
                                                 Lucy Ives
                                             </td>
                                             <td>
-                                                99
+                                                year
                                             </td>
                                         </tr>
 
@@ -283,18 +269,18 @@
             </div>
 
 
-            
 
 
 
 
-           
+
+
         </div>
 
 
 
     </div>
-    <script src="/script/user.js"></script>
+    <script src="/script/user.js" type="module"></script>
 </body>
 
 </html>

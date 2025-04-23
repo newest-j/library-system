@@ -57,7 +57,7 @@ searchBtn.addEventListener('click', async () => {
         tableBody.innerHTML = "";
         
         // poulate my book list
-        bookresult.docs.forEach(book => {
+        bookresult.docs.slice(0,20).forEach(book => {
 
             const row = document.createElement("tr");
 
