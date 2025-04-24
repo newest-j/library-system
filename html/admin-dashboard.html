@@ -15,78 +15,13 @@
 
 <body>
 
-    <div class="container text-white d-flex pt-4 justify-content-between" id="nav">
-
-        <div>
-            <!-- Button to open the offcanvas sidebar -->
-            <button id="offcanvassidebar" class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#demo">
-                <i class="fa fa-bars text-primary ms-3" aria-hidden="true"></i>
-            </button>
-
-        </div>
-
-
-        <div>
-            <p>Dashboard</p>
-        </div>
-
-
-
-
-        <div>
-            <input id="input" id="input" type="text" class="form-control" placeholder="Search...">
-            <button id="searchbtn" class="btn btn-primary" type="button">Search</button>
-        </div>
-
-        <div class="d-flex gap-4">
-            <div>
-                <p id="adminname" class="mb-0">name</p>
-                <p id="adminstatus">status</p>
-            </div>
-
-            <div>
-                <img src="/images/icons8-female-profile-48.png" alt="">
-            </div>
-        </div>
-    </div>
-
-
-    <!-- --hero-- -->
-
-    <div class="offcanvas offcanvas-start text-bg-dark" id="demo">
-        <div class="offcanvas-header">
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="d-flex  flex-column gap-5 ps-3 pt-4">
-
-
-                <a href="/html/user-dashboard.html"> <i class="fa fa-home" aria-hidden="true"></i></a>
-                <a href="/html/userbook.html"><i class="fa fa-book" aria-hidden="true"></i></a>
-                <a href=""> <i class="fa-solid fa-money-bill"></i></a>
-                <a href=""> <i class="fa fa-sign-out" aria-hidden="true"></i></a>
-
-
-            </div>
-
-
-        </div>
-    </div>
-
+    <!-- the page header and sidebar goes here -->
+    
+    <div id="header"></div>
 
     <div class="d-flex gap-5">
         <!-- sidebar -->
-        <div class="d-sm-flex d-none  flex-column gap-5 ps-3 pt-4">
-
-
-            <a href="/html/admin-dashboard.html"> <i class="fa fa-home" aria-hidden="true"></i></a>
-            <a href="/html/adminbook.html"><i class="fa fa-book" aria-hidden="true"></i></a>
-            <a href=""> <i class="fa-solid fa-money-bill"></i></a>
-            <a type="button" class="text-primary" id="signout"> <i class="fa fa-sign-out" aria-hidden="true"></i></a>
-
-
-        </div>
+       <div id="sidebar"></div>
 
         <div class="container-fluid text-white" id="main">
             <h2>Hello, <span id="heroname" class="text-danger">name!</span></h2>

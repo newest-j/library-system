@@ -1,4 +1,7 @@
-import {signout} from "./utils.js";
+import {signout ,setLayOut} from "./utils.js";
+setLayOut();
+
+
 
 let user = JSON.parse(localStorage.getItem("currentuserid"))
 document.getElementById("signout").addEventListener('click' , ()=>{
