@@ -8,10 +8,10 @@ document.getElementById("signout").addEventListener('click', () => {
 })
 
 // offcanvas signout
-document.getElementById("offcanvassignout").addEventListener('click' , ()=>{
+document.getElementById("offcanvassignout").addEventListener('click', () => {
     currentuser = signout();
     window.location.href = "/index.html";
-}) 
+})
 
 
 // for the header 
@@ -25,8 +25,8 @@ const userStatus = document.getElementById("adminstatus");
 const heroName = document.getElementById("heroname");
 const userDate = document.getElementById("herodate");
 
-const foundUser = users.find(user=> user.id === currentuser)
-if(foundUser){
+const foundUser = users.find(user => user.id === currentuser)
+if (foundUser) {
     userName.innerHTML = foundUser.userName;
     userStatus.innerHTML = foundUser.role;
     heroName.innerHTML = foundUser.userName;
@@ -46,24 +46,37 @@ const topChoice = document.querySelector('#topchoice');
 
 
 const books = JSON.parse(localStorage.getItem("books"));
+
+
+// display the totalbooks
+document.getElementById("totalbooks").innerHTML = books.length;
+document.getElementById("borrowedbooks").innerHTML = foundUser.borrowedBooks.length;
 // console.log(books)
 const displayedTitles = new Set(); // Track searched book titles
 
 
 searchBtn.addEventListener('click', () => {
     const bookName = searchBook.value.trim().toLowerCase();
-    
+
+
+    if (bookName === "") {
+        alert("Please enter a book name to search!");
+        return;
+    }
+
+    searchBook.value = "";
+
     if (displayedTitles.has(bookName)) {
         alert("You have already added  this book to your list");
         searchBook.value = "";
         return;
     }
 
-    
-    searchBook.value = "";
-    const foundBook = books.find(book=> book.title.trim().toLowerCase().includes(bookName))
 
-    if(foundBook){
+
+    const foundBook = books.find(book => book.title.trim().toLowerCase().includes(bookName))
+
+    if (foundBook) {
         const row = document.createElement("tr");
 
         row.innerHTML = `
@@ -74,26 +87,50 @@ searchBtn.addEventListener('click', () => {
         
           `
 
-          tableBody.appendChild(row);
+        tableBody.appendChild(row);
+        displayedTitles.add(bookName);
 
-
-          topChoice.innerHTML = "";
-          books.slice(4, 8).forEach(book => {
-              const choice = document.createElement("div");
-              choice.className = "col";
-              choice.innerHTML = `
+        topChoice.innerHTML = "";
+        books.slice(4, 8).forEach(book => {
+            const choice = document.createElement("div");
+            choice.className = "col";
+            choice.innerHTML = `
                   <img src="${book.coverURL}" class="w-50" alt="">
                   <p class="mb-0">${book.author}</p>
                   <p>${book.title}</p>
               `;
-              topChoice.appendChild(choice);
-              displayedTitles.add(bookName);
-          });
+            topChoice.appendChild(choice);
+            displayedTitles.add(bookName);
+        });
+
+
+        // add the book to save books 
+
+        if (!foundUser.borrowedBooks.some(book => book.title === foundBook.title)) {
+            foundUser.borrowedBooks.push(foundBook);
+            localStorage.setItem('users', JSON.stringify(
+                users.map(user => user.id === foundUser.id ? foundUser : user)
+            ));
+
+            let currentTotal = parseInt(document.getElementById("totalbooks").innerText);
+            if (currentTotal > 0) {
+                currentTotal -= 1;
+                document.getElementById("totalbooks").innerHTML = currentTotal;
+            }
+
+        } else {
+            alert("You have already added this book to your saved books.");
+        }
+
+
     }
-   
-       
-    
+
+
+
     else {
         alert("Book not found in the library")
     }
+
+
+
 })
