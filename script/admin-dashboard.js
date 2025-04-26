@@ -9,15 +9,42 @@ document.getElementById("signout").addEventListener('click', () => {
 
 // offcanvas signout
 
-document.getElementById("offcanvassignout").addEventListener('click' , ()=>{
+document.getElementById("offcanvassignout").addEventListener('click', () => {
     currentuser = signout();
     window.location.href = "/index.html";
-}) 
+})
 
+let users = JSON.parse(localStorage.getItem("users"))
+
+const books = JSON.parse(localStorage.getItem("books"));
+const foundUser = users.find(user => user.id === currentuser)
+document.getElementById("totalbooks").innerHTML = books.length;
+document.getElementById("borrowedbooks").innerHTML = users[0].borrowedBooks.length;
+document.getElementById("newmembers").innerHTML = users.slice(3).length;
+
+
+// user list table
+const userListTable = document.querySelector("#usertable tbody");
+
+// Loop through users starting from index 3 (4th user)
+users.slice(3).forEach(user => {
+    const tbrow = document.createElement('tr');
+
+    // Populate the row with user data
+    tbrow.innerHTML = `  
+        <td>${user.id}</td>
+        <td>${user.userName}</td>
+        <td>${user.borrowedBooks.map(book => book.title).join(', ')}</td>
+        <td>${user.email}</td>
+    `;
+
+    // Append the row to the table
+    userListTable.appendChild(tbrow);
+});
 
 // header
 
-let users = JSON.parse(localStorage.getItem("users"))
+
 // console.log(users)
 
 // console.log(users)
@@ -49,7 +76,7 @@ async function getBooksFromSubjects() {
     for (let subject of subjects) {
         const response = await fetch(`https://openlibrary.org/subjects/${subject}.json`);
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
 
         const books = data.works.map(book => {
             const authorNames = book.authors
@@ -65,13 +92,16 @@ async function getBooksFromSubjects() {
                 author: authorNames,
                 year: book.first_publish_year || "N/A",
                 coverURL: coverURL,
-                
+
             };
         });
 
         allBooks.push(...books); // flatten all into one array
     }
+    // console.log(allBooks);
     return allBooks;
+
+
 }
 
 // Display books in table and top choices
