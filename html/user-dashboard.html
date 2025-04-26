@@ -15,18 +15,23 @@
 
 <body>
 
-   <!-- the page header and sidebar goes here -->
-    
-   <div id="header"></div>
+    <!-- the header -->
 
+    <div id="userheader"></div>
+
+  
+
+    <!-- content -->
     <div class="d-flex gap-5">
         <!-- sidebar -->
 
-        <div id="sidebar"></div>
 
+        <div id="usersidebar"></div>
+        
+        <!-- sidebar ends -->
         <div class="container-fluid text-white" id="main">
-            <h2>Hello, <span class="text-danger">name!</span></h2>
-            <p>Date</p>
+            <h2>Hello, <span id="heroname" class="text-danger">name!</span></h2>
+            <p id="herodate">Date</p>
 
 
             <div class="row">
@@ -110,9 +115,21 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
+
                                 <h4 class="text-white">My Book List</h4>
-                                <a class="btn btn-primary" href="" type="button">Add New Book</a>
+                                <div class="d-flex">
+                                    <input id="input" type="text" class="form-control w-50"
+                                        placeholder="Search for books...">
+                                    <button class="btn btn-primary" id="searchbtn">Add the book</button>
+                                </div>
+
                             </div>
+
+
+
+
+
+
 
                             <div class="table-responsive" style="max-height: 300px;">
                                 <table id="booktable" class="table table-hover table-dark  mt-3 rounded-2">
@@ -136,77 +153,6 @@
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <img class="img-fluid"
-                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
-                                                    alt="Book cover" />
-                                            </td>
-                                            </td>
-                                            <td>
-                                                The Secret Syllabus
-                                            </td>
-                                            <td>
-                                                Lucy Ives
-                                            </td>
-                                            <td>
-                                                year
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>
-                                                <img class="img-fluid"
-                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
-                                                    alt="Book cover" />
-                                            </td>
-                                            <td>
-                                                The Secret Syllabus
-                                            </td>
-                                            <td>
-                                                Lucy Ives
-                                            </td>
-                                            <td>
-                                                year
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>
-                                                <img class="img-fluid"
-                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
-                                                    alt="Book cover" />
-                                            </td>
-                                            <td>
-                                                The Secret Syllabus
-                                            </td>
-                                            <td>
-                                                Lucy Ives
-                                            </td>
-                                            <td>
-                                                year
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>
-                                                <img class="img-fluid"
-                                                    src="https://placehold.co/50x75?text=No+Cover&font=roboto"
-                                                    alt="Book cover" />
-                                            </td>
-                                            <td>
-                                                The Secret Syllabus
-                                            </td>
-                                            <td>
-                                                Lucy Ives
-                                            </td>
-                                            <td>
-                                                year
-                                            </td>
-                                        </tr>
 
 
                                     </tbody>
@@ -227,7 +173,7 @@
             <div class="mt-4">
                 <h4 class="text-white">Top Choices</h4>
 
-                <div class="row text-center ">
+                <div class="row text-center " id="topchoice">
 
                     <div class="col">
                         <img src="/images/The Visual MBA.png" alt="">

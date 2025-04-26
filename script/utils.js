@@ -17,40 +17,76 @@ export const signout = () => {
     localStorage.removeItem("currentuserid");
 }
 
-// html header
+//admin html header
 export async function getHeaderContent() {
 
     try {
-        const response = await fetch("/html/header.html");
+        const response = await fetch("/html/adminheader.html");
         const data = await response.text();
 
-        document.getElementById("header").innerHTML = data;
+        document.getElementById("adminheader").innerHTML = data;
     }
     catch (err) {
-        console.error("Failed to the header", err)
+        console.error("Failed to fetch the header", err)
     }
 
 }
 
 
 
-// html sidebar
+//admin html sidebar
 export async function getSidebarContent() {
 
     try {
-        const response = await fetch("/html/sidebar.html");
+        const response = await fetch("/html/adminsidebar.html");
         const data = await response.text();
 
-        document.getElementById("sidebar").innerHTML = data;
+        document.getElementById("adminsidebar").innerHTML = data;
     }
     catch (err) {
-        console.error("Failed to the header", err)
+        console.error("Failed to fetch  the sidebar", err)
     }
 
 }
 export async function setLayOut() {
     await getHeaderContent()
     await getSidebarContent()
+}
+
+
+// user html header
+export async function getUserHeader() {
+
+    try {
+        const response = await fetch("/html/userheader.html");
+        const data = await response.text();
+
+        document.getElementById("userheader").innerHTML = data;
+    }
+    catch (err) {
+        console.error("Failed to fetch the header", err)
+    }
+
+}
+
+//user html sidebar
+export async function getUserSidebar() {
+
+    try {
+        const response = await fetch("/html/usersidebar.html");
+        const data = await response.text();
+
+        document.getElementById("usersidebar").innerHTML = data;
+    }
+    catch (err) {
+        console.error("Failed to fetch  the sidebar", err)
+    }
+
+}
+
+export async function setUserLayOut() {
+    await getUserHeader()
+    await getUserSidebar()
 }
 
 
