@@ -49,10 +49,37 @@ const books = JSON.parse(localStorage.getItem("books"));
 
 
 // display the totalbooks
-document.getElementById("totalbooks").innerHTML = books.length;
+// document.getElementById("totalbooks").innerHTML = books.length;
 document.getElementById("borrowedbooks").innerHTML = foundUser.borrowedBooks.length;
 // console.log(books)
 const displayedTitles = new Set(); // Track searched book titles
+
+// to get the user borrowedbook to populate the table instead of reloading
+function getUserBorrowedBooks(){
+    const userBooks = foundUser.borrowedBooks
+    const savedTotal = localStorage.getItem('usertotalBooks');
+
+
+    if (savedTotal !== null) {
+        document.getElementById("totalbooks").innerText = savedTotal;
+    } else {
+        // set book total value to default
+        document.getElementById("totalbooks").innerHTML = books.length;
+    }
+
+    userBooks.forEach(book => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><img class="img-fluid w-25" src="${book.coverURL}" alt="Book cover" /></td>
+            <td>${book.title || "No title"}</td>
+            <td>${book.author ? book.author : "Unknown author"}</td>
+            <td>${book.year || "N/A"}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+getUserBorrowedBooks()
 
 
 searchBtn.addEventListener('click', () => {
@@ -116,7 +143,10 @@ searchBtn.addEventListener('click', () => {
             if (currentTotal > 0) {
                 currentTotal -= 1;
                 document.getElementById("totalbooks").innerHTML = currentTotal;
+
+                localStorage.setItem('usertotalBooks', currentTotal);
             }
+            
 
         } else {
             alert("You have already added this book to your saved books.");

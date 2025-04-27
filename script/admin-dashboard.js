@@ -17,7 +17,7 @@ document.getElementById("offcanvassignout").addEventListener('click', () => {
 let users = JSON.parse(localStorage.getItem("users"))
 
 const books = JSON.parse(localStorage.getItem("books"));
-const foundUser = users.find(user => user.id === currentuser)
+// const foundUser = users.find(user => user.id === currentuser)
 document.getElementById("totalbooks").innerHTML = books.length;
 document.getElementById("borrowedbooks").innerHTML = users[0].borrowedBooks.length;
 document.getElementById("newmembers").innerHTML = users.slice(3).length;
@@ -76,7 +76,7 @@ async function getBooksFromSubjects() {
     for (let subject of subjects) {
         const response = await fetch(`https://openlibrary.org/subjects/${subject}.json`);
         const data = await response.json();
-        // console.log(data)
+        console.log(data)
 
         const books = data.works.map(book => {
             const authorNames = book.authors
@@ -106,38 +106,131 @@ async function getBooksFromSubjects() {
 
 // Display books in table and top choices
 async function showBooks() {
-    const books = await getBooksFromSubjects();
+    // Show loading spinner for table
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="4" class="text-center">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p>Please wait, fetching books...</p>
+            </td>
+        </tr>
+    `;
 
-    localStorage.setItem('books', JSON.stringify(books)); // Store in localStorage
+    // Show loading spinner for topChoice
+    topChoice.innerHTML = `
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p>Please wait, fetching books...</p>
+        </div>
+    `;
 
-    // Populate book table
-    tableBody.innerHTML = "";
-    books.slice(0, 20).forEach(book => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td><img class="img-fluid" src="${book.coverURL}" alt="Book cover" /></td>
-            <td>${book.title}</td>
-            <td>${book.author}</td>
-            <td>${book.year}</td>
+    try {
+        const books = await getBooksFromSubjects();
+
+        if (books && books.length > 0) {
+            localStorage.setItem('books', JSON.stringify(books)); 
+
+            // Populate the book table
+            tableBody.innerHTML = "";
+            books.slice(0, 20).forEach(book => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><img class="img-fluid" src="${book.coverURL}" alt="Book cover" /></td>
+                    <td>${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>${book.year}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Populate topChoice
+            topChoice.innerHTML = "";
+            books.slice(4, 8).forEach(book => {
+                const choice = document.createElement("div");
+                choice.className = "col text-center";
+                choice.innerHTML = `
+                    <img src="${book.coverURL}" class="w-25 mb-2" alt="">
+                    <p class="mb-0">${book.author}</p>
+                    <p>${book.title}</p>
+                `;
+                topChoice.appendChild(choice);
+            });
+        } else {
+            // No books found
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="text-center text-danger">
+                        <p>No books found. Please try again later!</p>
+                    </td>
+                </tr>
+            `;
+
+            topChoice.innerHTML = `
+                <div class="text-center text-danger">
+                    <p>No top books found. Please try again later!</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        // In case of network/server error
+        console.error("Error fetching books:", error);
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="4" class="text-center text-danger">
+                    <p>Failed to fetch books. Please check your connection.</p>
+                </td>
+            </tr>
         `;
-        tableBody.appendChild(row);
-    });
 
-    // Populate top choice section
-    topChoice.innerHTML = "";
-    books.slice(4, 8).forEach(book => {
-        const choice = document.createElement("div");
-        choice.className = "col";
-        choice.innerHTML = `
-            <img src="${book.coverURL}" class="w-25" alt="">
-            <p class="mb-0">${book.author}</p>
-            <p>${book.title}</p>
+        topChoice.innerHTML = `
+            <div class="text-center text-danger">
+                <p>Failed to fetch top books. Please check your connection.</p>
+            </div>
         `;
-        topChoice.appendChild(choice);
-    });
+    }
 }
 
 showBooks();
+
+
+
+// async function showBooks() {
+//     let books = JSON.parse(localStorage.getItem('books'));
+
+//     // If no books are stored yet, fetch and store them
+//     if (!books || books.length === 0) {
+//         books = await getBooksFromSubjects();
+//         localStorage.setItem('books', JSON.stringify(books));
+//     }
+
+//     // Populate book table
+//     tableBody.innerHTML = "";
+//     books.slice(0, 20).forEach(book => {
+//         const row = document.createElement("tr");
+//         row.innerHTML = `
+//             <td><img class="img-fluid" src="${book.coverURL}" alt="Book cover" /></td>
+//             <td>${book.title}</td>
+//             <td>${book.author}</td>
+//             <td>${book.year}</td>
+//         `;
+//         tableBody.appendChild(row);
+//     });
+
+//     // Populate top choice section
+//     topChoice.innerHTML = "";
+//     books.slice(4, 8).forEach(book => {
+//         const choice = document.createElement("div");
+//         choice.className = "col";
+//         choice.innerHTML = `
+//             <img src="${book.coverURL}" class="w-25" alt="">
+//             <p class="mb-0">${book.author}</p>
+//             <p>${book.title}</p>
+//         `;
+//         topChoice.appendChild(choice);
+//     });
+// }
+// showBooks();
 
 
 
@@ -196,19 +289,3 @@ form.addEventListener("submit", (e) => {
 });
 
 
-// // Load existing books from local storage when the page loads
-// window.addEventListener('load', () => {
-//     // Retrieve existing books from local storage
-//     const books = JSON.parse(localStorage.getItem('books')) || [];
-
-//     books.forEach(book => {
-//         const row = document.createElement("tr");
-//         row.innerHTML = `
-//             <td><img src="${book.coverURL}" alt="Cover" style="height:60px"></td>
-//             <td>${book.title}</td>
-//             <td>${book.author}</td>
-//             <td>${book.year}</td>
-//         `;
-//         tableBody2.appendChild(row);
-//     });
-// });
